@@ -92,7 +92,7 @@ body {
         @apply relative z-10 min-h-dvh w-full border border-transparent;
 
         h1 {
-            @apply md:mt-32 mt-40 text-8xl md:text-[20vw] leading-none text-center font-modern-negra;
+            @apply md:mt-24 mt-32 text-7xl md:text-[16vw] leading-none text-center font-modern-negra;
         }
 
         .left-leaf {
@@ -100,28 +100,28 @@ body {
         }
 
         .right-leaf {
-            @apply absolute right-0 md:bottom-0 xl:top-0 2xl:top-12 top-1/2 md:w-fit w-24;
+            @apply absolute right-0 top-1/2 -translate-y-1/2 md:w-fit w-24;
         }
 
         .body {
-            @apply container mx-auto absolute left-1/2 -translate-x-1/2 lg:bottom-20 top-auto md:top-[30vh] flex justify-between items-end px-5;
+            @apply container mx-auto absolute left-1/2 -translate-x-1/2 lg:bottom-20 top-auto md:top-[30vh] md:translate-y-20 flex justify-between items-end px-5;
 
             .content {
-                @apply flex lg:flex-row flex-col w-full gap-10 justify-between items-center lg:items-end mx-auto;
+                @apply flex lg:flex-row flex-col w-full gap-10 justify-between items-center lg:items-end mx-auto text-center;
 
                 p:nth-of-type(2) {
-                    @apply font-modern-negra text-6xl text-yellow max-w-xl;
+                    @apply font-modern-negra text-5xl text-yellow max-w-xl;
                 }
 
                 p:last-of-type {
-                    @apply 2xl:text-start text-center;
+                    @apply text-center;
                 }
 
                 .view-cocktails {
-                    @apply space-y-5 text-lg lg:max-w-2xs md:max-w-xs w-full;
+                    @apply space-y-5 text-base lg:max-w-2xs md:max-w-xs w-full;
 
                     p {
-                        @apply text-left;
+                        @apply text-center;
                     }
 
                     a {
