@@ -1,20 +1,28 @@
-import React from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { SplitText } from 'gsap/all';
+import { useMediaQuery } from 'react-responsive';
 
 const Hero = () => {
+  const heroRef = useRef(null);
+  const videoContainerRef = useRef(null);
+  const videoRef = useRef(null);
+  const iceCubeRef = useRef(null);
+
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   useGSAP(() => {
     const heroSplit = new SplitText('.title', { type: 'chars,words' });
     const paragraphSplit = new SplitText('.subtitle', { type: 'lines' });
-     
+
     heroSplit.chars.forEach((char) => char.classList.add('text-gradient'));
-    
+
     gsap.from(heroSplit.chars, {
       yPercent: 100,
       duration: 1.8,
       ease: 'expo.out',
-      stagger: 0.06
+      stagger: 0.06,
     });
 
     gsap.from(paragraphSplit.lines, {
@@ -24,29 +32,109 @@ const Hero = () => {
       duration: 1.8,
       delay: 1,
       ease: 'expo.out',
-      stagger: 0.06,
-      delay: 1,
     });
 
     gsap.timeline({
         scrollTrigger: {
-            trigger: '#hero',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-        }
-    })
-    .to ('.right-leaf',{y:200},0)
-    .to ('.left-leaf',{y:-200},0)
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
+      .to('.right-leaf', { y: 200 }, 0)
+      .to('.left-leaf', { y: -200 }, 0);
+
+    const startValue = isMobile ? 'top 50%' : 'center 60%';
+    const endValue = isMobile ? '120% top' : 'bottom top';
+
+
+    const video = videoRef.current;
+    const videoTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: video,
+        start: startValue,
+        end: endValue,
+        scrub: true,
+        pin: videoContainerRef.current,
+      },
+    });
+    videoTimeline.fromTo(
+      video,
+      {
+        height: isMobile ? '50%' : '80%',
+        borderRadius: '1.5rem',
+      },
+      {
+        height: '100%',
+        borderRadius: '0rem',
+        ease: 'none',
+        duration: 1,
+      },
+      0
+    );
+    const animateVideo = () => {
+      videoTimeline.to(video, {
+        currentTime: video.duration,
+        ease: 'none',
+        duration: 1,
+      }, 0);
+    };
+
+    if (video.readyState >= 1) {
+      animateVideo();
+    } else {
+      video.addEventListener('loadedmetadata', animateVideo, { once: true });
+    }
+
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.6,
+        },
+      })
+      .fromTo(
+        iceCubeRef.current,
+        {
+          y: 0,
+          rotation: -24,
+          scale: 0.7,
+          opacity: 0,
+        },
+        {
+          y: isMobile ? '42vh' : '38vh',
+          rotation: 180,
+          scale: 1,
+          opacity: 1,
+          ease: 'power2.in',
+        },
+        0
+      );
+
     return () => {
+      video.removeEventListener('loadedmetadata', animateVideo);
       heroSplit.revert();
       paragraphSplit.revert();
     };
-  }, []);
+  }, { scope: heroRef, dependencies: [isMobile], revertOnUpdate: true });
 
-   
   return (
-    <section id="hero" className="noisy">
+    <section ref={heroRef} id="hero" className="noisy">
+      <div ref={videoContainerRef} className="video absolute inset-x-0 top-0 h-dvh w-full" aria-hidden="true">
+        <video
+          ref={videoRef}
+          src="/videos/input.mp4"
+          muted
+          playsInline
+          preload="auto"
+        />
+      </div>
+
+      <div ref={iceCubeRef} className="ice-cube" aria-hidden="true" />
+
       <h1 className="title">MOJITO</h1>
 
       <img src="/images/hero-left-leaf.png" alt="left-leaf" className="left-leaf" />
@@ -54,7 +142,7 @@ const Hero = () => {
 
       <div className="body">
         <div className="content">
-          <div className="space-y-5 hidden md:block">
+          <div className="space-y-5 text-left">
             <p>Cool. Crisp. Classic.</p>
             <p className="subtitle">
               Sip the Spirit <br />of Summer
