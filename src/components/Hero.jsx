@@ -8,7 +8,6 @@ const Hero = () => {
   const heroRef = useRef(null);
   const videoContainerRef = useRef(null);
   const videoRef = useRef(null);
-  const iceCubeRef = useRef(null);
 
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
@@ -46,17 +45,16 @@ const Hero = () => {
       .to('.left-leaf', { y: -200 }, 0);
 
     const startValue = isMobile ? 'top 50%' : 'center 60%';
-    const endValue = isMobile ? '120% top' : 'bottom top';
-
-
     const video = videoRef.current;
     const videoTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: video,
         start: startValue,
-        end: endValue,
+        endTrigger: document.getElementById('cocktails'),
+        end: 'bottom bottom',
         scrub: true,
         pin: videoContainerRef.current,
+        pinSpacing: false,
       },
     });
     videoTimeline.fromTo(
@@ -87,33 +85,6 @@ const Hero = () => {
       video.addEventListener('loadedmetadata', animateVideo, { once: true });
     }
 
-    gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.6,
-        },
-      })
-      .fromTo(
-        iceCubeRef.current,
-        {
-          y: 0,
-          rotation: -24,
-          scale: 0.7,
-          opacity: 0,
-        },
-        {
-          y: isMobile ? '42vh' : '38vh',
-          rotation: 180,
-          scale: 1,
-          opacity: 1,
-          ease: 'power2.in',
-        },
-        0
-      );
-
     return () => {
       video.removeEventListener('loadedmetadata', animateVideo);
       heroSplit.revert();
@@ -132,8 +103,6 @@ const Hero = () => {
           preload="auto"
         />
       </div>
-
-      <div ref={iceCubeRef} className="ice-cube" aria-hidden="true" />
 
       <h1 className="title">MOJITO</h1>
 
