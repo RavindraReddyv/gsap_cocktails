@@ -261,6 +261,7 @@ body {
             @apply relative mx-auto w-full rounded-4xl overflow-hidden;
             max-width: 34rem;
             height: clamp(18rem, 42vh, 30rem);
+            transform: translateY(-1.5rem);
         }
 
         .content .sip-worthy {
@@ -401,56 +402,60 @@ body {
     }
 
     #menu {
-        @apply relative w-full md:mt-40 mt-0 2xl:px-0 px-5 py-20 radial-gradient;
-
-        #m-left-leaf {
-            @apply object-contain absolute -bottom-20 left-0 md:w-fit w-1/3;
-        }
+        @apply relative w-full md:mt-40 mt-0 2xl:px-0 px-5 pt-36 pb-32 md:pt-28 md:pb-40 radial-gradient;
 
         #m-right-leaf {
-            @apply object-contain absolute -top-40 right-0 md:w-fit w-1/4;
+            @apply pointer-events-none object-contain absolute -top-40 right-0 w-1/5 md:w-40 xl:w-fit z-0 opacity-50;
         }
 
         .cocktail-tabs {
-            @apply grid md:grid-cols-4 grid-cols-2 md:gap-20 gap-10 sm:mb-32 mb-20 relative z-10 md:max-w-6xl md:mx-auto;
+            @apply grid xl:grid-cols-4 grid-cols-2 xl:gap-20 md:gap-8 gap-4 xl:mb-32 mb-12 relative z-10 md:max-w-4xl xl:max-w-6xl md:mx-auto;
 
             button {
-                @apply md:text-3xl text-xl pb-2 cursor-pointer hover:text-yellow hover:border-yellow border-b-1 transition-colors font-modern-negra;
+                @apply xl:text-3xl md:text-2xl text-lg pb-2 cursor-pointer hover:text-yellow hover:border-yellow border-b-1 transition-colors font-modern-negra;
+
+                &[aria-pressed="true"] {
+                    @apply text-yellow border-yellow;
+                }
             }
         }
 
         .content {
-            @apply flex flex-col justify-between items-center container mx-auto relative;
+            @apply flex flex-col justify-between items-center container mx-auto relative z-10;
 
             .arrows {
-                @apply flex items-center justify-between w-full absolute;
+                @apply flex items-center justify-between w-full absolute top-1/2 left-0 right-0 -translate-y-1/2 pointer-events-none;
 
                 button {
-                    @apply text-white hover:text-yellow cursor-pointer transition-colors max-w-36;
+                    @apply text-white hover:text-yellow cursor-pointer transition-colors max-w-36 flex items-center gap-2 pointer-events-auto;
 
                     span {
                         @apply text-3xl font-modern-negra leading-none hidden md:block;
+                    }
+
+                    img {
+                        @apply size-8 md:size-12 object-contain;
                     }
                 }
             }
         }
 
         .cocktail {
-            @apply flex-center mt-10;
+            @apply flex-center relative mt-4 md:mt-10 w-full;
 
-            img {
+            > img {
                 @apply object-contain h-[60vh];
             }
         }
 
         .recipe {
-            @apply flex max-md:flex-col gap-10 md:items-center justify-between w-full lg:absolute bottom-0;
+            @apply flex max-md:flex-col gap-10 md:items-center justify-between w-full xl:absolute xl:bottom-0;
 
             .info {
-                @apply space-y-4 lg:translate-y-20;
+                @apply space-y-4 xl:translate-y-20;
 
                 #title {
-                    @apply font-modern-negra md:text-6xl text-3xl text-yellow max-w-40;
+                    @apply font-modern-negra xl:text-6xl md:text-4xl text-3xl text-yellow max-w-40;
                 }
             }
 
@@ -458,7 +463,7 @@ body {
                 @apply space-y-5 md:max-w-md text-left;
 
                 h2 {
-                    @apply md:text-5xl text-3xl font-serif;
+                    @apply xl:text-5xl md:text-4xl text-3xl font-serif;
                 }
 
                 p {
@@ -469,7 +474,9 @@ body {
     }
 
     #contact {
-        @apply relative md:mt-20 mt-0 px-4 text-center w-full overflow-hidden radial-gradient;
+        @apply relative z-10 md:mt-20 mt-0 px-4 text-center w-full overflow-hidden radial-gradient;
+        isolation: isolate;
+        background-color: #000;
 
         #f-left-leaf {
             @apply absolute bottom-0 left-0 pointer-events-none lg:w-fit w-1/3;

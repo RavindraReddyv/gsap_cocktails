@@ -13,7 +13,7 @@ const Art = () => {
       scrollTrigger: {
         trigger: '#art',
         start,
-        end: 'bottom center',
+        end: 'bottom top',
         scrub: 1.5,
         pin: true,
       },

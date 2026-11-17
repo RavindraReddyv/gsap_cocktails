@@ -14,7 +14,8 @@ function SmoothScroll({ children }) {
       autoRaf: false,
       smoothWheel: true,
       anchors: true,
-      lerp: 0.1,
+      lerp: 0.08,
+      wheelMultiplier: 0.9,
     })
     const updateScroll = (time) => lenis.raf(time * 1000)
 
