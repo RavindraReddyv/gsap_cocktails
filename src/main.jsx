@@ -6,6 +6,20 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './index.css'
 import App from './app.jsx'
 
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual'
+}
+
+if (window.location.hash) {
+  window.history.replaceState(
+    window.history.state,
+    '',
+    `${window.location.pathname}${window.location.search}`,
+  )
+}
+
+window.scrollTo(0, 0)
+
 gsap.registerPlugin(ScrollTrigger)
 
 function SmoothScroll({ children }) {
@@ -17,6 +31,7 @@ function SmoothScroll({ children }) {
       lerp: 0.08,
       wheelMultiplier: 0.9,
     })
+    lenis.scrollTo(0, { immediate: true })
     const updateScroll = (time) => lenis.raf(time * 1000)
 
     lenis.on('scroll', ScrollTrigger.update)
