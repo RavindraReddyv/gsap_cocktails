@@ -6,18 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './index.css'
 import App from './app.jsx'
 
-if ('scrollRestoration' in window.history) {
-  window.history.scrollRestoration = 'manual'
-}
-
-if (window.location.hash) {
-  window.history.replaceState(
-    window.history.state,
-    '',
-    `${window.location.pathname}${window.location.search}`,
-  )
-}
-
 window.scrollTo(0, 0)
 
 gsap.registerPlugin(ScrollTrigger)
