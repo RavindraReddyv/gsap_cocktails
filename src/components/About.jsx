@@ -78,7 +78,7 @@ const About = () => {
             </div>
             
             <div className="image-frame">
-              <img src="/images/under-img.jpg" alt="Bartender preparing drinks at the bar" />
+              <img src="/images/abt4.png" alt="Refreshing citrus cocktail with orange and mint" />
               <div className="noisy" />
             </div>
           </div>
